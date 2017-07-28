@@ -63,6 +63,9 @@ public class NavigatableOption : MonoBehaviour {
 
     public void Activate()
     {
+        if (m_UIElement == null)
+            return;
+
         switch (m_UIType)
         {
             case UIType.Button:

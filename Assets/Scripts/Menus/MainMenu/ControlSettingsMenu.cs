@@ -27,15 +27,15 @@ public class ControlSettingsMenu : MonoBehaviour {
     {
         for (int i = 0; i < actionNames.Length; i++)
             buttonActionLabels[i].text = InputManager.Instance.UI_GetInputName(actionNames[i] + " Controller False");
-        for (int i = 0; i < actionNames.Length; i++)
-            keyActionLabels[i].text = InputManager.Instance.UI_GetInputName(actionNames[i] + " Keyboard False");
+        //for (int i = 0; i < actionNames.Length; i++)
+        //    keyActionLabels[i].text = InputManager.Instance.UI_GetInputName(actionNames[i] + " Keyboard False");
 
         for (int i = 0; i < axisNames.Length; i++)
             buttonAxisLabels[i].text = InputManager.Instance.UI_GetInputName(axisNames[i] + " Controller False");
 
-        for (int i = 0; i < axisNames.Length; i++)
-            keyPosAxisLabels[i].text = InputManager.Instance.UI_GetInputName(axisNames[i] + " Keyboard False");
-        for (int i = 0; i < axisNames.Length; i++)
-            keyNegAxisLabels[i].text = InputManager.Instance.UI_GetInputName(axisNames[i] + " Keyboard True");
+        //for (int i = 0; i < axisNames.Length; i++)
+        //    keyPosAxisLabels[i].text = InputManager.Instance.UI_GetInputName(axisNames[i] + " Keyboard False");
+        //for (int i = 0; i < axisNames.Length; i++)
+        //    keyNegAxisLabels[i].text = InputManager.Instance.UI_GetInputName(axisNames[i] + " Keyboard True");
     }
 }

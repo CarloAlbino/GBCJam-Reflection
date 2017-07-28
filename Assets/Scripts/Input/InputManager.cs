@@ -79,6 +79,9 @@ public class InputManager : Singleton<InputManager> {
     #region Input Reassigning
     public void UI_ReassignInput(string inputNameAndDevice)
     {
+        if (m_reassignInput || m_reassignAxis)
+            return;
+
         string[] newInput = inputNameAndDevice.Split(' ');
 
         m_inputToReassign = newInput[0];
@@ -98,10 +101,14 @@ public class InputManager : Singleton<InputManager> {
 
         m_reassignInput = true;
         m_reasignWaitTime = 0;
+        FindObjectOfType<MenuManager>().isActive = false;
     }
 
     public void UI_ReasignAxis(string inputNameAndStateAndDevice)
     {
+        if (m_reassignInput || m_reassignAxis)
+            return;
+
         string[] newInput = inputNameAndStateAndDevice.Split(' ');
 
         m_inputToReassign = newInput[0];
@@ -134,6 +141,7 @@ public class InputManager : Singleton<InputManager> {
 
         m_reassignAxis = true;
         m_reasignWaitTime = 0;
+        FindObjectOfType<MenuManager>().isActive = false;
     }
 
     public string UI_GetInputName(string inputNameAndDeviceAndNegative)
@@ -229,6 +237,7 @@ public class InputManager : Singleton<InputManager> {
                     m_reassignAxis = false;
 
                     m_inputs.Add(newMapping.name, newMapping);  // Add inputs to the dictionary
+                    FindObjectOfType<MenuManager>().isActive = true;
                     return;
                 }
             }
@@ -254,6 +263,7 @@ public class InputManager : Singleton<InputManager> {
                     m_reassignAxis = false;
 
                     m_inputs.Add(newMapping.name, newMapping);  // Add inputs to the dictionary
+                    FindObjectOfType<MenuManager>().isActive = true;
                     return;
                 }
             }
@@ -277,6 +287,7 @@ public class InputManager : Singleton<InputManager> {
                     m_reassignAxis = false;
 
                     m_inputs.Add(newMapping.name, newMapping);  // Add inputs to the dictionary
+                    FindObjectOfType<MenuManager>().isActive = true;
                     return;
                 }
                 else if (Mathf.Abs(Input.GetAxis(s)) < 0)
@@ -299,6 +310,7 @@ public class InputManager : Singleton<InputManager> {
                     m_reassignAxis = false;
 
                     m_inputs.Add(newMapping.name, newMapping);  // Add inputs to the dictionary
+                    FindObjectOfType<MenuManager>().isActive = true;
                     return;
                 }
             }

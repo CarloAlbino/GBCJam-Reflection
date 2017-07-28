@@ -27,6 +27,9 @@ public class MenuManager : MonoBehaviour {
 
     private bool m_accessingDropDown = false;
 
+    private bool m_isActive = true;
+    public bool isActive { get { return m_isActive; } set { m_isActive = value; } }
+
     void Start()
     {
         m_currentMenu = m_defaultMenu;
@@ -41,6 +44,9 @@ public class MenuManager : MonoBehaviour {
     {
         if (m_navigationWaitTime >= m_navigationDelay)
         {
+            if (!m_isActive)
+                return;
+
             if (InputManager.Instance.GetButton("Left"))
             {
                 // Sliding audio slider to the left
@@ -89,7 +95,7 @@ public class MenuManager : MonoBehaviour {
                 }
                 m_navigationWaitTime = 0;
             }
-            else if (InputManager.Instance.GetButtonDown("A"))
+            else if (InputManager.Instance.GetButtonDown("A_1"))
             {
                 if (m_accessingDropDown)
                 {
@@ -110,7 +116,7 @@ public class MenuManager : MonoBehaviour {
                 m_menuAudio.PlayAccept();
                 m_navigationWaitTime = 0;
             }
-            else if (InputManager.Instance.GetButtonDown("B"))
+            else if (InputManager.Instance.GetButtonDown("B_1"))
             {
                 if(m_accessingDropDown)
                 {
