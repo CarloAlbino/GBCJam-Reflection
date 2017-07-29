@@ -13,6 +13,13 @@ public class LevelController : MonoBehaviour {
     [SerializeField]
     private MeshRenderer m_foldBackground;
 
+    [SerializeField]
+    private GameObject[] m_foldColliders;
+    [SerializeField]
+    private Transform m_foldPosition;
+    private GameObject m_fold = null;
+    private int m_lastFoldNum = -1;
+
     private int m_foldCount = 0;
 
     private CameraController m_cameraController;
@@ -27,6 +34,18 @@ public class LevelController : MonoBehaviour {
 
     public void SignalClosing()
     {
+        if (m_fold != null)
+            Destroy(m_fold);
+
+        int nextFold;
+        do
+        {
+            nextFold = Random.Range(0, m_foldColliders.Length);
+        } while (nextFold == m_lastFoldNum);
+        m_lastFoldNum = nextFold;
+
+        m_fold = Instantiate(m_foldColliders[nextFold], m_foldPosition) as GameObject;
+
         m_foldBackground.enabled = true;
         m_cameraController.MoveCamera(1, m_levelSpeed * m_cameraSpeedFactor, 15, true);
     }
@@ -41,5 +60,12 @@ public class LevelController : MonoBehaviour {
         m_foldCount++;
         m_levelSpeed += 5;
         m_cameraController.MoveCamera(0, m_levelSpeed * m_cameraSpeedFactor, 6.7f, true);
+    }
+
+    public void SignalCrush()
+    {
+        Collider[] cols = m_fold.GetComponentsInChildren<Collider>();
+        foreach (Collider c in cols)
+            c.enabled = true;
     }
 }
