@@ -468,15 +468,21 @@ public class InputManager : Singleton<InputManager> {
             {
                 float output = 0.0f;
                 bool keypressed = false;
-                if(Input.GetKey((KeyCode)System.Enum.Parse(typeof(KeyCode), input.positiveKeyName)))
+                if (input.positiveKeyName != "")
                 {
-                    output += 1.0f;
-                    keypressed = true;
+                    if (Input.GetKey((KeyCode)System.Enum.Parse(typeof(KeyCode), input.positiveKeyName)))
+                    {
+                        output += 1.0f;
+                        keypressed = true;
+                    }
                 }
-                if(Input.GetKey((KeyCode)System.Enum.Parse(typeof(KeyCode), input.negativeKeyName)))
+                if (input.negativeKeyName != "")
                 {
-                    output += -1.0f;
-                    keypressed = true;
+                    if (Input.GetKey((KeyCode)System.Enum.Parse(typeof(KeyCode), input.negativeKeyName)))
+                    {
+                        output += -1.0f;
+                        keypressed = true;
+                    }
                 }
 
                 if(keypressed)
