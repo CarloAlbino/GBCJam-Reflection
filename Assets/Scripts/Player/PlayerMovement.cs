@@ -40,12 +40,6 @@ public class PlayerMovement : MonoBehaviour {
 
         if (rightHorizontalInput != 0 && rightVerticalInput != 0)
         {
-            //float angle = Mathf.Atan2(rightVerticalInput, -rightHorizontalInput) * Mathf.Rad2Deg;
-            //m_mesh.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-            //m_mesh.rotation = Quaternion.LookRotation(new Vector3(0, rightHorizontalInput, rightVerticalInput));
-            //m_mesh.eulerAngles = new Vector3(m_mesh.eulerAngles.x, 90, 90);
-
             m_mesh.LookAt(new Vector3(m_mesh.transform.position.x + rightHorizontalInput, m_mesh.transform.position.y + -rightVerticalInput, m_mesh.transform.position.z));
         }
     }
