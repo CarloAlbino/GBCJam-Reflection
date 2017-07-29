@@ -8,12 +8,6 @@ public class PlayerCollision : MonoBehaviour {
     private int m_playerNum;
 
     [SerializeField]
-    private Transform m_crushHidingSpot;
-
-    [SerializeField]
-    private Transform m_respawnPosition;
-
-    [SerializeField]
     private float m_respawnTime = 3.0f;
 
     void OnTriggerEnter(Collider other)
@@ -22,7 +16,7 @@ public class PlayerCollision : MonoBehaviour {
         {
             // Hit
             GameController.Instance.AddScore(-5, m_playerNum);
-            transform.position = m_crushHidingSpot.position;
+            transform.position = GameController.Instance.hidePosition.position;
             StartCoroutine(RespawnCount());
         }
 
@@ -38,6 +32,6 @@ public class PlayerCollision : MonoBehaviour {
     {
         yield return new WaitForSeconds(m_respawnTime);
 
-        transform.position = m_respawnPosition.position;
+        transform.position = GameController.Instance.GetSpawnPos(m_playerNum).position;
     }
 }

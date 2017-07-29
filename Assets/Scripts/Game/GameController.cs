@@ -9,6 +9,12 @@ public class GameController : Singleton<GameController> {
     [SerializeField]
     private int[] m_score = new int[4];
 
+    [SerializeField]
+    private Transform[] m_spawnPositions;
+    [SerializeField]
+    private Transform m_hidePosition;
+    public Transform hidePosition {get { return m_hidePosition; } }
+
     private bool m_isGame = false;
 
     [SerializeField]
@@ -82,5 +88,10 @@ public class GameController : Singleton<GameController> {
         m_isGame = false;
         SceneManager.LoadScene(0);
         Destroy(this.gameObject);
+    }
+
+    public Transform GetSpawnPos(int playerNum)
+    {
+        return m_spawnPositions[playerNum - 1];
     }
 }
