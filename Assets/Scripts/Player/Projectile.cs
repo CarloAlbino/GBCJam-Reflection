@@ -17,6 +17,9 @@ public class Projectile : MonoBehaviour {
     private Rigidbody m_rb;
     private Coroutine m_destroyCoroutine = null;
 
+	[SerializeField]
+	private GameObject explosionPrefab;
+
 	void Start ()
     {
         //m_rb = GetComponent<Rigidbody>();
@@ -27,6 +30,7 @@ public class Projectile : MonoBehaviour {
     {
         if(other.collider.gameObject.tag == "Player" + m_tag)
         {
+			SpawnExplosion(other.contacts[0]);
             StopCoroutine(m_destroyCoroutine);
             Destroy(this.gameObject);
         }
@@ -42,4 +46,12 @@ public class Projectile : MonoBehaviour {
     {
         m_rb.AddForce(transform.forward * m_speed, ForceMode.Impulse);
     }
+
+	private void SpawnExplosion(ContactPoint contact)
+	{
+		GameObject explosion = Instantiate(explosionPrefab);
+		explosion.transform.position = contact.point;
+		explosion.transform.forward = contact.normal;
+		Destroy(explosion, 5.0f);
+	}
 }
