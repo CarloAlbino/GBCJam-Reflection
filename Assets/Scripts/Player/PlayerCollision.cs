@@ -14,6 +14,9 @@ public class PlayerCollision : MonoBehaviour {
     {
         if(other.tag == "Crush")
         {
+            if (GameController.Instance.remainingTime <= 0)
+                return;
+
             // Hit
             GameController.Instance.AddScore(-5, m_playerNum);
             transform.position = GameController.Instance.hidePosition.position;

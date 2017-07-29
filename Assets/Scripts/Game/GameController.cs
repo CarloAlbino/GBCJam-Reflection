@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class GameController : Singleton<GameController> {
 
+    [SerializeField]
+    private GameObject[] m_playerPrefabs;
+    [SerializeField]
     private bool[] m_activePlayers = new bool[4];
     [SerializeField]
     private int[] m_score = new int[4];
@@ -16,6 +19,7 @@ public class GameController : Singleton<GameController> {
     private Transform m_hidePosition;
     public Transform hidePosition {get { return m_hidePosition; } }
 
+    [SerializeField]
     private bool m_isGame = false;
 
     [SerializeField]
@@ -26,15 +30,22 @@ public class GameController : Singleton<GameController> {
     private float m_quitTime = 3;
     private float m_quitCount = 0;
 
+    [SerializeField]
+    private int m_gameTime = 90;
+    public int gameTime { get { return m_gameTime; } }
+    private int m_remainingTime = 90;
+    public int remainingTime { get { return m_remainingTime; } }
+
 	void Start ()
     {
-		for(int i = 0; i < m_activePlayers.Length; i++)
-        {
-            m_activePlayers[i] = false;
-            m_score[i] = 0;
-        }
+		//for(int i = 0; i < m_activePlayers.Length; i++)
+  //      {
+  //          m_activePlayers[i] = false;
+  //          m_score[i] = 0;
+  //      }
 
-        m_quitTimer = GameObject.Find("TimerImage").GetComponent<Image>();
+        if(!m_isGame)
+            m_quitTimer = GameObject.Find("TimerImage").GetComponent<Image>();
 	}
 
 	void Update ()
@@ -45,6 +56,33 @@ public class GameController : Singleton<GameController> {
         }
 	}
 
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("Scene Loaded");
+        if(scene.buildIndex == m_gameScene)
+        {
+            Debug.Log("Scene game");
+            m_isGame = true;
+
+            for(int i = 0; i < 4; i++)
+            {
+                if(m_activePlayers[i] == true)
+                {
+                    Instantiate(m_playerPrefabs[i], m_spawnPositions[i].position, Quaternion.identity);
+                    m_remainingTime = m_gameTime;
+                }
+            }
+
+            StartCoroutine(CountDownTime());
+        }
+    }
+
+    #region CharacterSelect
     private void CharacterSelectControls()
     {
         for (int i = 1; i < 5; i++)
@@ -84,9 +122,14 @@ public class GameController : Singleton<GameController> {
             m_quitTimer.fillAmount = 0;
         }
     }
+    #endregion
 
+    #region Score
     public void AddScore(int score, int player)
     {
+        if (remainingTime <= 0)
+            return;
+
         m_score[player - 1] += score;
     }
 
@@ -94,13 +137,27 @@ public class GameController : Singleton<GameController> {
     {
         return m_score[player - 1];
     }
+    #endregion
 
+    #region Time
+    public IEnumerator CountDownTime()
+    {
+        yield return new WaitForSeconds(1);
+        m_remainingTime--;
+        if(m_remainingTime > 0)
+            StartCoroutine(CountDownTime());
+    }
+    #endregion
+
+    #region SceneControl
     public void RestartGame()
     {
         for (int i = 0; i < m_activePlayers.Length; i++)
         {
             m_score[i] = 0;
         }
+        StopAllCoroutines();
+        m_remainingTime = m_gameTime;
         SceneManager.LoadScene(m_gameScene);
     }
 
@@ -115,7 +172,9 @@ public class GameController : Singleton<GameController> {
         SceneManager.LoadScene(0);
         Destroy(this.gameObject);
     }
+    #endregion
 
+    #region GameControl
     public Transform GetSpawnPos(int playerNum)
     {
         return m_spawnPositions[playerNum - 1];
@@ -125,4 +184,5 @@ public class GameController : Singleton<GameController> {
     {
         return m_activePlayers[playerNum - 1];
     }
+    #endregion
 }

@@ -62,6 +62,9 @@ public class LevelController : MonoBehaviour {
 
     public void SignalRemove()
     {
+        if (GameController.Instance.remainingTime <= 0)
+            return;
+
         m_foldBackground.enabled = false;
 
         for (int i = 0; i < m_numOfObjectsToSpawn; i++)
@@ -75,7 +78,7 @@ public class LevelController : MonoBehaviour {
     public void SignalOpen()
     {
         m_foldCount++;
-        m_levelSpeed += 5;
+        m_levelSpeed += 2;
         m_cameraController.MoveCamera(0, m_levelSpeed * m_cameraSpeedFactor, 6.7f, true);
     }
 
