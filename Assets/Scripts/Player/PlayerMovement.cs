@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour {
         transform.Translate(movementDirection * m_speed * Time.deltaTime);
         //m_rb.AddForce(movementDirection * m_speed, ForceMode.VelocityChange);
 
-        if (m_rb.velocity.magnitude < 1.0f)
+        if (m_rb.velocity.magnitude < 1.0f || movementDirection.magnitude > 0.0f)
         {
             m_rb.velocity = Vector3.zero;
         }

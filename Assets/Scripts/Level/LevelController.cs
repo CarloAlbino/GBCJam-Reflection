@@ -22,6 +22,13 @@ public class LevelController : MonoBehaviour {
 
     private int m_foldCount = 0;
 
+    [SerializeField]
+    private GameObject m_pickup;
+    [SerializeField]
+    private int m_numOfObjectsToSpawn = 20;
+    [SerializeField]
+    private Transform m_spawnVolume;
+
     private CameraController m_cameraController;
 
     void Start () {
@@ -29,7 +36,10 @@ public class LevelController : MonoBehaviour {
 	}
 
 	void Update () {
-		
+		if(Input.GetKeyDown(KeyCode.Space))
+        {
+            SignalRemove();
+        }
 	}
 
     public void SignalClosing()
@@ -53,6 +63,13 @@ public class LevelController : MonoBehaviour {
     public void SignalRemove()
     {
         m_foldBackground.enabled = false;
+
+        for (int i = 0; i < m_numOfObjectsToSpawn; i++)
+        {
+            Instantiate(m_pickup, new Vector3(Random.Range(m_spawnVolume.position.x - m_spawnVolume.localScale.x / 2, m_spawnVolume.position.x + m_spawnVolume.localScale.x / 2),
+                Random.Range(m_spawnVolume.position.y - m_spawnVolume.localScale.y / 2, m_spawnVolume.position.y + m_spawnVolume.localScale.y / 2),
+                m_spawnVolume.position.z), Quaternion.identity);
+        }
     }
 
     public void SignalOpen()

@@ -27,5 +27,10 @@ public class LevelTriggerMessage : MonoBehaviour {
         {
             m_levelController.SignalRemove();
         }
+
+        if(other.tag == "Crushing")
+        {
+            m_levelController.SignalCrush();
+        }
     }
 }
