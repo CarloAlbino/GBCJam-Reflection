@@ -14,8 +14,12 @@ public class PlayerMovement : MonoBehaviour {
 
     string m_lh, m_lv, m_rh, m_rv;
 
+    private Rigidbody m_rb;
+
 	void Start ()
     {
+        m_rb = GetComponent<Rigidbody>();
+
         m_lh = "LH_" + m_playerNum.ToString();
         m_lv = "LV_" + m_playerNum.ToString();
         m_rh = "RH_" + m_playerNum.ToString();
@@ -37,6 +41,12 @@ public class PlayerMovement : MonoBehaviour {
 
         Vector2 movementDirection = new Vector2(leftHorizontalInput, -leftVerticalInput);
         transform.Translate(movementDirection * m_speed * Time.deltaTime);
+        //m_rb.AddForce(movementDirection * m_speed, ForceMode.VelocityChange);
+
+        if (m_rb.velocity.magnitude < 1.0f)
+        {
+            m_rb.velocity = Vector3.zero;
+        }
 
         if (rightHorizontalInput != 0 && rightVerticalInput != 0)
         {

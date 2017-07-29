@@ -40,6 +40,6 @@ public class LevelController : MonoBehaviour {
     {
         m_foldCount++;
         m_levelSpeed += 5;
-        m_cameraController.MoveCamera(0, m_levelSpeed * m_cameraSpeedFactor, 6, true);
+        m_cameraController.MoveCamera(0, m_levelSpeed * m_cameraSpeedFactor, 6.7f, true);
     }
 }

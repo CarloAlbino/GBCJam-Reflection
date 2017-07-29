@@ -335,8 +335,15 @@ public class InputManager : Singleton<InputManager> {
                 {
                     if (!input.isAxis)
                     {
-                        if ((Input.GetKey((KeyCode)System.Enum.Parse(typeof(KeyCode), input.positiveKeyName))) ||
-                            (Input.GetAxis(input.buttonName) < 0 && input.axisPositiveState == EAxisState.GreaterThan) ||
+                        if (input.positiveKeyName != "")
+                        {
+                            if ((Input.GetKeyDown((KeyCode)System.Enum.Parse(typeof(KeyCode), input.positiveKeyName))))
+                            {
+                                i.Press();
+                                return true;
+                            }
+                        }
+                        else if ((Input.GetAxis(input.buttonName) < 0 && input.axisPositiveState == EAxisState.GreaterThan) ||
                             (Input.GetAxis(input.buttonName) > 0 && input.axisPositiveState == EAxisState.LessThan) ||
                             (Input.GetButton(input.buttonName)))
                         {
@@ -380,8 +387,15 @@ public class InputManager : Singleton<InputManager> {
                     {
                         if (!input.isAxis)
                         {
-                            if ((Input.GetKeyDown((KeyCode)System.Enum.Parse(typeof(KeyCode), input.positiveKeyName))) ||
-                                (Input.GetAxis(input.buttonName) < 0 && input.axisPositiveState == EAxisState.GreaterThan) ||
+                            if (input.positiveKeyName != "")
+                            {
+                                if ((Input.GetKeyDown((KeyCode)System.Enum.Parse(typeof(KeyCode), input.positiveKeyName))))
+                                {
+                                    i.Press();
+                                    return true;
+                                }
+                            }
+                            else if ((Input.GetAxis(input.buttonName) < 0 && input.axisPositiveState == EAxisState.GreaterThan) ||
                                 (Input.GetAxis(input.buttonName) > 0 && input.axisPositiveState == EAxisState.LessThan) ||
                                 (Input.GetButtonDown(input.buttonName)))
                             {
@@ -426,8 +440,15 @@ public class InputManager : Singleton<InputManager> {
                     {
                         if (!input.isAxis)
                         {
-                            if ((Input.GetKeyUp((KeyCode)System.Enum.Parse(typeof(KeyCode), input.positiveKeyName))) ||
-                                (Input.GetAxis(input.buttonName) < 0 && input.axisPositiveState == EAxisState.GreaterThan) ||
+                            if (input.positiveKeyName != "")
+                            {
+                                if ((Input.GetKeyDown((KeyCode)System.Enum.Parse(typeof(KeyCode), input.positiveKeyName))))
+                                {
+                                    i.UnPress();
+                                    return true;
+                                }
+                            }
+                            else if ((Input.GetAxis(input.buttonName) < 0 && input.axisPositiveState == EAxisState.GreaterThan) ||
                                 (Input.GetAxis(input.buttonName) > 0 && input.axisPositiveState == EAxisState.LessThan) ||
                                 (Input.GetButtonDown(input.buttonName)))
                             {
