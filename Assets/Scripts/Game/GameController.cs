@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameController : Singleton<GameController> {
 
@@ -20,6 +21,11 @@ public class GameController : Singleton<GameController> {
     [SerializeField]
     private int m_gameScene = 2;
 
+    [SerializeField]
+    private Image m_quitTimer;
+    private float m_quitTime = 3;
+    private float m_quitCount = 0;
+
 	void Start ()
     {
 		for(int i = 0; i < m_activePlayers.Length; i++)
@@ -27,6 +33,8 @@ public class GameController : Singleton<GameController> {
             m_activePlayers[i] = false;
             m_score[i] = 0;
         }
+
+        m_quitTimer = GameObject.Find("TimerImage").GetComponent<Image>();
 	}
 
 	void Update ()
@@ -53,10 +61,27 @@ public class GameController : Singleton<GameController> {
 
             if (InputManager.Instance.GetButtonDown("Pause_" + i))
             {
-                // Start game
-                m_isGame = true;
-                SceneManager.LoadScene(m_gameScene);
+                if (m_activePlayers[i-1] == true)
+                {
+                    // Start game
+                    m_isGame = true;
+                    SceneManager.LoadScene(m_gameScene);
+                }
             }
+        }
+
+        if (InputManager.Instance.GetButton("B_1"))
+        {
+            Debug.Log("Pressed B");
+            m_quitCount += Time.deltaTime;
+            m_quitTimer.fillAmount += m_quitCount / m_quitTime;
+            if (m_quitCount > m_quitTime)
+                ToMainMenu();
+        }
+        else if (InputManager.Instance.GetButton("B_1") == false)
+        {
+            m_quitCount = 0;
+            m_quitTimer.fillAmount = 0;
         }
     }
 
@@ -76,6 +101,7 @@ public class GameController : Singleton<GameController> {
         {
             m_score[i] = 0;
         }
+        SceneManager.LoadScene(m_gameScene);
     }
 
     public void ToMainMenu()
@@ -93,5 +119,10 @@ public class GameController : Singleton<GameController> {
     public Transform GetSpawnPos(int playerNum)
     {
         return m_spawnPositions[playerNum - 1];
+    }
+
+    public bool PlayerActive(int playerNum)
+    {
+        return m_activePlayers[playerNum - 1];
     }
 }
