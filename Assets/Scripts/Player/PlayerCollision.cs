@@ -32,7 +32,7 @@ public class PlayerCollision : MonoBehaviour {
             // Hit
             m_audio.PlayEffect(1);
             GameController.Instance.AddScore(-5, m_playerNum);
-            m_lastParticles = Instantiate(m_deathParticles, transform.position, transform.rotation) as GameObject;
+            m_lastParticles = Instantiate(m_deathParticles, transform.position, /*transform.Find("Mesh").*/transform.rotation) as GameObject;
             transform.position = GameController.Instance.hidePosition.position;
             StartCoroutine(RespawnCount());
         }
