@@ -16,9 +16,11 @@ public class PlayerPowers : MonoBehaviour {
     [SerializeField]
     private int m_playerNum;
 
-	void Start () {
-		
-	}
+    private PlayerAudio m_audio;
+
+    void Start () {
+        m_audio = GetComponent<PlayerAudio>();
+    }
 
 	void Update ()
     {
@@ -31,10 +33,15 @@ public class PlayerPowers : MonoBehaviour {
         {
             if(InputManager.Instance.GetAxis("RTrigger_" + m_playerNum.ToString()) > 0 || InputManager.Instance.GetButton("RBumper_" + m_playerNum.ToString()))
             {
+                m_audio.Shoot(true);
                 GameObject p = Instantiate(m_projectile, m_projectileSpawn.position + m_projectileSpawn.forward, m_projectileSpawn.rotation) as GameObject;
                 p.GetComponent<Projectile>().projectileTag = m_playerNum.ToString();
                 p.GetComponent<Projectile>().Launch();
                 m_fireCount = m_fireRate;
+            }
+            else
+            {
+                m_audio.Shoot(false);
             }
         }
         else
