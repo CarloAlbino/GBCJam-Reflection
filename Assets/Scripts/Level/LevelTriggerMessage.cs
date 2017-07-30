@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelTriggerMessage : MonoBehaviour {
 
     private LevelController m_levelController;
+    public AudioSource m_audio;
 
     void Start()
     {
@@ -31,6 +32,11 @@ public class LevelTriggerMessage : MonoBehaviour {
         if(other.tag == "Crushing")
         {
             m_levelController.SignalCrush();
+        }
+
+        if(other.tag == "Close")
+        {
+            m_audio.Play();
         }
     }
 }

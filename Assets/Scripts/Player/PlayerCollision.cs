@@ -48,11 +48,13 @@ public class PlayerCollision : MonoBehaviour {
 
     private IEnumerator RespawnCount()
     {
-        yield return new WaitForSeconds(m_respawnTime);
-
-        if(m_lastParticles != null)
-            Destroy(m_lastParticles);
+        yield return new WaitForSeconds(m_respawnTime / 2);
         m_audio.PlayEffect(2);
+        yield return new WaitForSeconds(m_respawnTime / 2);
+
+        if (m_lastParticles != null)
+            Destroy(m_lastParticles);
+
         transform.position = GameController.Instance.GetSpawnPos(m_playerNum).position;
     }
 }
