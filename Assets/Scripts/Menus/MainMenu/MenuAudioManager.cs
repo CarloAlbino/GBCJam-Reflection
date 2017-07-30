@@ -16,12 +16,14 @@ public class MenuAudioManager : MonoBehaviour {
 
     public void PlayAccept()
     {
+        m_sfxAudio.Stop();
         m_sfxAudio.clip = m_acceptAudio;
         m_sfxAudio.Play();
     }
 
     public void PlayBack()
     {
+        m_sfxAudio.Stop();
         m_sfxAudio.clip = m_backAudio;
         m_sfxAudio.Play();
     }

@@ -36,6 +36,7 @@ public class LevelTriggerMessage : MonoBehaviour {
 
         if(other.tag == "Close")
         {
+            m_levelController.SignalClose();
             m_audio.Play();
         }
     }

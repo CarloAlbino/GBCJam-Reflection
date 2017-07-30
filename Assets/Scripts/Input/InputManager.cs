@@ -343,7 +343,7 @@ public class InputManager : Singleton<InputManager> {
                                 return true;
                             }
                         }
-                        else if ((Input.GetAxis(input.buttonName) < 0 && input.axisPositiveState == EAxisState.GreaterThan) ||
+                        if ((Input.GetAxis(input.buttonName) < 0 && input.axisPositiveState == EAxisState.GreaterThan) ||
                             (Input.GetAxis(input.buttonName) > 0 && input.axisPositiveState == EAxisState.LessThan) ||
                             (Input.GetButton(input.buttonName)))
                         {
@@ -395,7 +395,7 @@ public class InputManager : Singleton<InputManager> {
                                     return true;
                                 }
                             }
-                            else if ((Input.GetAxis(input.buttonName) < 0 && input.axisPositiveState == EAxisState.GreaterThan) ||
+                            if ((Input.GetAxis(input.buttonName) < 0 && input.axisPositiveState == EAxisState.GreaterThan) ||
                                 (Input.GetAxis(input.buttonName) > 0 && input.axisPositiveState == EAxisState.LessThan) ||
                                 (Input.GetButtonDown(input.buttonName)))
                             {
@@ -448,7 +448,7 @@ public class InputManager : Singleton<InputManager> {
                                     return true;
                                 }
                             }
-                            else if ((Input.GetAxis(input.buttonName) < 0 && input.axisPositiveState == EAxisState.GreaterThan) ||
+                            if ((Input.GetAxis(input.buttonName) < 0 && input.axisPositiveState == EAxisState.GreaterThan) ||
                                 (Input.GetAxis(input.buttonName) > 0 && input.axisPositiveState == EAxisState.LessThan) ||
                                 (Input.GetButtonDown(input.buttonName)))
                             {

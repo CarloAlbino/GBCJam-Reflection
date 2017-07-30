@@ -49,98 +49,107 @@ public class MenuManager : MonoBehaviour {
             if (!m_isActive)
                 return;
 
-            if (InputManager.Instance.GetButton("Left"))
-            {
-                // Sliding audio slider to the left
-                m_currentOptions[m_currentlySelectedOption].Slide(-1);
-            }
-            else if (InputManager.Instance.GetButton("Right"))
-            {
-                // Sliding audio slider to the right
-                m_currentOptions[m_currentlySelectedOption].Slide(1);
-            }
-            else if (InputManager.Instance.GetButtonDown("Up"))
-            {
-                if (m_accessingDropDown)
+            for (int i = 1; i < 5; i++) {
+                if (InputManager.Instance.GetAxis("LH_" + i) < 0) //(InputManager.Instance.GetButton("Left"))
                 {
-                    // Moving up in the drop down menu
-                    m_currentOptions[m_currentlySelectedOption].NavigateDropDown(-1);
+                    // Sliding audio slider to the left
+                    m_currentOptions[m_currentlySelectedOption].Slide(-1);
                 }
-                else
+                else if (InputManager.Instance.GetAxis("LH_" + i) > 0) //(InputManager.Instance.GetButton("Right"))
                 {
-                    // Move up in menu
-                    m_currentlySelectedOption--;
-                    if (m_currentlySelectedOption < 0)
+                    // Sliding audio slider to the right
+                    m_currentOptions[m_currentlySelectedOption].Slide(1);
+                }
+                else if (InputManager.Instance.GetAxis("LV_" + i) < 0) //(InputManager.Instance.GetButtonDown("Up"))
+                {
+                    if (m_accessingDropDown)
                     {
-                        m_currentlySelectedOption = m_currentOptions.Length - 1;
+                        // Moving up in the drop down menu
+                        m_currentOptions[m_currentlySelectedOption].NavigateDropDown(-1);
                     }
-                    UpdateSelection();
-                }
-                m_navigationWaitTime = 0;
-            }
-            else if (InputManager.Instance.GetButtonDown("Down"))
-            {
-                if (m_accessingDropDown)
-                {
-                    // Move down in the dropdown menu
-                    m_currentOptions[m_currentlySelectedOption].NavigateDropDown(1);
-                }
-                else
-                {
-                    // Move down in menu
-                    m_currentlySelectedOption++;
-                    if (m_currentlySelectedOption >= m_currentOptions.Length)
+                    else
                     {
-                        m_currentlySelectedOption = 0;
-                    }
-                    UpdateSelection();
-                }
-                m_navigationWaitTime = 0;
-            }
-            else if (InputManager.Instance.GetButtonDown("A_1"))
-            {
-                if (m_accessingDropDown)
-                {
-                    // Select a dropdown option
-                    m_currentOptions[m_currentlySelectedOption].Deactivate();
-                    m_accessingDropDown = false;
-                }
-                else
-                {
-                    // Select menu option
-                    m_currentOptions[m_currentlySelectedOption].Activate();
-
-                    if (m_currentOptions[m_currentlySelectedOption].UIType == UIType.DropDown)
-                    {
-                        m_accessingDropDown = true;
-                    }
-                }
-                m_menuAudio.PlayAccept();
-                m_navigationWaitTime = 0;
-            }
-            else if (InputManager.Instance.GetButtonDown("B_1"))
-            {
-                if(m_accessingDropDown)
-                {
-                    // Cancel dropdown selection
-                    m_currentOptions[m_currentlySelectedOption].Deactivate();
-                    m_accessingDropDown = false;
-                }
-                else
-                {
-                    // Go back a menu
-                    for (int i = m_parentMenus.Length - 1; i > -1; i--)
-                    {
-                        if (m_currentMenu > i)
+                        // Move up in menu
+                        m_currentlySelectedOption--;
+                        if (m_currentlySelectedOption < 0)
                         {
-                            Button_GoToMenu(i);
-                            break;
+                            m_currentlySelectedOption = m_currentOptions.Length - 1;
+                        }
+                        UpdateSelection();
+                    }
+                    m_navigationWaitTime = 0;
+                }
+                else if (InputManager.Instance.GetAxis("LV_" + i) > 0) //(InputManager.Instance.GetButtonDown("Down"))
+                {
+                    if (m_accessingDropDown)
+                    {
+                        // Move down in the dropdown menu
+                        m_currentOptions[m_currentlySelectedOption].NavigateDropDown(1);
+                    }
+                    else
+                    {
+                        // Move down in menu
+                        m_currentlySelectedOption++;
+                        if (m_currentlySelectedOption >= m_currentOptions.Length)
+                        {
+                            m_currentlySelectedOption = 0;
+                        }
+                        UpdateSelection();
+                    }
+                    m_navigationWaitTime = 0;
+                }
+                else if (InputManager.Instance.GetButtonDown("A_" + i)) //(InputManager.Instance.GetButtonDown("A_1"))
+                {
+                    if (m_accessingDropDown)
+                    {
+                        // Select a dropdown option
+                        m_currentOptions[m_currentlySelectedOption].Deactivate();
+                        m_accessingDropDown = false;
+                    }
+                    else
+                    {
+                        // Select menu option
+                        m_currentOptions[m_currentlySelectedOption].Activate();
+
+                        if (m_currentOptions[m_currentlySelectedOption].UIType == UIType.DropDown)
+                        {
+                            m_accessingDropDown = true;
                         }
                     }
+                    m_menuAudio.PlayAccept();
+                    m_navigationWaitTime = 0;
                 }
+                else if (InputManager.Instance.GetButtonDown("B_" + i)) //(InputManager.Instance.GetButtonDown("B_1"))
+                {
+                    if (m_accessingDropDown)
+                    {
+                        // Cancel dropdown selection
+                        m_currentOptions[m_currentlySelectedOption].Deactivate();
+                        m_accessingDropDown = false;
+                    }
+                    else
+                    {
+                        //if (m_currentMenu == 1 || m_currentMenu == 2 || m_currentMenu == 3)
+                        //{
+                        //    Button_GoToMenu(m_defaultMenu);
+                        //}
+                        //else
+                        //{
+                            // Go back a menu
+                            for (int j = m_parentMenus.Length - 1; j > -1; j--)
+                            {
+                                if (m_currentMenu > m_parentMenus[j])
+                                {
+                                    Button_GoToMenu(m_parentMenus[j]);
+                                    break;
+                                }
+                            }
+                        //}
+                    }
 
-                m_menuAudio.PlayBack();
-                m_navigationWaitTime = 0;
+                    m_menuAudio.PlayBack();
+                    m_navigationWaitTime = 0;
+                }
             }
         }
         else

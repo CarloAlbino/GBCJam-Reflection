@@ -77,13 +77,6 @@ public class LevelController : MonoBehaviour {
         m_foldCount++;
         m_levelSpeed += 2;
         m_cameraController.MoveCamera(0, m_levelSpeed * m_cameraSpeedFactor, 6.7f, true);
-
-        for (int i = 0; i < m_numOfObjectsToSpawn / 2; i++)
-        {
-            Instantiate(m_pickup, new Vector3(Random.Range(m_spawnVolume.position.x - m_spawnVolume.localScale.x / 2, m_spawnVolume.position.x + m_spawnVolume.localScale.x / 2),
-                Random.Range(m_spawnVolume.position.y - m_spawnVolume.localScale.y / 2, m_spawnVolume.position.y + m_spawnVolume.localScale.y / 2),
-                m_spawnVolume.position.z), Quaternion.identity);
-        }
     }
 
     public void SignalCrush()
@@ -91,5 +84,19 @@ public class LevelController : MonoBehaviour {
         Collider[] cols = m_fold.GetComponentsInChildren<Collider>();
         foreach (Collider c in cols)
             c.enabled = true;
+    }
+
+    public void SignalClose()
+    {
+        Collider[] cols = m_fold.GetComponentsInChildren<Collider>();
+        foreach (Collider c in cols)
+            c.enabled = false;
+
+        for (int i = 0; i < m_numOfObjectsToSpawn; i++)
+        {
+            Instantiate(m_pickup, new Vector3(Random.Range(m_spawnVolume.position.x - m_spawnVolume.localScale.x / 2, m_spawnVolume.position.x + m_spawnVolume.localScale.x / 2),
+                Random.Range(m_spawnVolume.position.y - m_spawnVolume.localScale.y / 2, m_spawnVolume.position.y + m_spawnVolume.localScale.y / 2),
+                m_spawnVolume.position.z), Quaternion.identity);
+        }
     }
 }

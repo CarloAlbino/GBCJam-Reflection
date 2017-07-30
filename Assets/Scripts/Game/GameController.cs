@@ -54,6 +54,13 @@ public class GameController : Singleton<GameController> {
         {
             CharacterSelectControls();
         }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                ToMainMenu();
+            }
+        }
 	}
 
     void OnEnable()
