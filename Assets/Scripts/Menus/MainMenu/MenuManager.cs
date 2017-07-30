@@ -30,6 +30,8 @@ public class MenuManager : MonoBehaviour {
     private bool m_isActive = true;
     public bool isActive { get { return m_isActive; } set { m_isActive = value; } }
 
+    public GameObject m_ship;
+
     void Start()
     {
         m_currentMenu = m_defaultMenu;
@@ -196,6 +198,11 @@ public class MenuManager : MonoBehaviour {
         m_currentOptions = m_menus[m_currentMenu].GetComponentsInChildren<NavigatableOption>();
         m_currentlySelectedOption = 0;
         UpdateSelection();
+
+        if (m_currentMenu == 0)
+            m_ship.SetActive(true);
+        else
+            m_ship.SetActive(false);
     }
 
     private void UpdateSelection()
