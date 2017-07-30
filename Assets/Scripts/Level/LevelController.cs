@@ -62,12 +62,9 @@ public class LevelController : MonoBehaviour {
 
     public void SignalRemove()
     {
-        if (GameController.Instance.remainingTime <= 0)
-            return;
-
         m_foldBackground.enabled = false;
 
-        for (int i = 0; i < m_numOfObjectsToSpawn; i++)
+        for (int i = 0; i < m_numOfObjectsToSpawn / 2; i++)
         {
             Instantiate(m_pickup, new Vector3(Random.Range(m_spawnVolume.position.x - m_spawnVolume.localScale.x / 2, m_spawnVolume.position.x + m_spawnVolume.localScale.x / 2),
                 Random.Range(m_spawnVolume.position.y - m_spawnVolume.localScale.y / 2, m_spawnVolume.position.y + m_spawnVolume.localScale.y / 2),
@@ -80,6 +77,13 @@ public class LevelController : MonoBehaviour {
         m_foldCount++;
         m_levelSpeed += 2;
         m_cameraController.MoveCamera(0, m_levelSpeed * m_cameraSpeedFactor, 6.7f, true);
+
+        for (int i = 0; i < m_numOfObjectsToSpawn / 2; i++)
+        {
+            Instantiate(m_pickup, new Vector3(Random.Range(m_spawnVolume.position.x - m_spawnVolume.localScale.x / 2, m_spawnVolume.position.x + m_spawnVolume.localScale.x / 2),
+                Random.Range(m_spawnVolume.position.y - m_spawnVolume.localScale.y / 2, m_spawnVolume.position.y + m_spawnVolume.localScale.y / 2),
+                m_spawnVolume.position.z), Quaternion.identity);
+        }
     }
 
     public void SignalCrush()

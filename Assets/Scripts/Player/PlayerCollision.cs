@@ -10,6 +10,11 @@ public class PlayerCollision : MonoBehaviour {
     [SerializeField]
     private float m_respawnTime = 3.0f;
 
+    [SerializeField]
+    private GameObject m_deathParticles;
+    [SerializeField]
+    private GameObject m_lastParticles;
+
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Crush")
@@ -19,6 +24,7 @@ public class PlayerCollision : MonoBehaviour {
 
             // Hit
             GameController.Instance.AddScore(-5, m_playerNum);
+            m_lastParticles = Instantiate(m_deathParticles, transform.position, transform.rotation) as GameObject;
             transform.position = GameController.Instance.hidePosition.position;
             StartCoroutine(RespawnCount());
         }
@@ -35,6 +41,8 @@ public class PlayerCollision : MonoBehaviour {
     {
         yield return new WaitForSeconds(m_respawnTime);
 
+        if(m_lastParticles != null)
+            Destroy(m_lastParticles);
         transform.position = GameController.Instance.GetSpawnPos(m_playerNum).position;
     }
 }

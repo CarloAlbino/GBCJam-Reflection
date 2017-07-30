@@ -18,6 +18,9 @@ public class LevelFolding : MonoBehaviour {
 
 	void Update ()
     {
+        if (GameController.Instance.remainingTime <= 0)
+            return;
+
         m_levelPivot.Rotate(Vector3.right, -m_levelController.levelSpeed * Time.deltaTime);
 	}
 }

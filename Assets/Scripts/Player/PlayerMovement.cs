@@ -43,14 +43,14 @@ public class PlayerMovement : MonoBehaviour {
         transform.Translate(movementDirection * m_speed * Time.deltaTime);
         //m_rb.AddForce(movementDirection * m_speed, ForceMode.VelocityChange);
 
-        if (m_rb.velocity.magnitude < 1.0f || movementDirection.magnitude > 0.0f)
+        if (m_rb.velocity.magnitude < 1.0f)// || movementDirection.magnitude > 0.0f)
         {
             m_rb.velocity = Vector3.zero;
         }
 
         if (rightHorizontalInput != 0 && rightVerticalInput != 0)
         {
-            m_mesh.LookAt(new Vector3(m_mesh.transform.position.x + rightHorizontalInput, m_mesh.transform.position.y + -rightVerticalInput, m_mesh.transform.position.z));
+            m_mesh.LookAt(new Vector3(m_mesh.transform.position.x + rightHorizontalInput, m_mesh.transform.position.y + -rightVerticalInput, m_mesh.transform.position.z), -rightVerticalInput * Vector3.right);
         }
     }
 }

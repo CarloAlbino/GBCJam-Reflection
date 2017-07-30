@@ -26,9 +26,9 @@ public class Projectile : MonoBehaviour {
         m_destroyCoroutine = StartCoroutine(DestroyAfterTime());
 	}
 
-    void OnCollsionEnter(Collision other)
+    void OnCollisionEnter(Collision other)
     {
-        if(other.collider.gameObject.tag == "Player" + m_tag)
+        if(other.collider.gameObject.tag != "Player" + m_tag)
         {
 			SpawnExplosion(other.contacts[0]);
             StopCoroutine(m_destroyCoroutine);
